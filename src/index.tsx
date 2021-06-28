@@ -1,25 +1,30 @@
 import React from 'react';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import {state, subscribe} from './redux/state';
+import {store} from './redux/redux-store';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import {addPost, RootStateType, updateNewPostText} from './redux/state'
 import {HashRouter} from 'react-router-dom';
+import { Provider } from 'react-redux';
 
-export const rerenderEntireTree = (state: RootStateType) => {
+
+
+export const rerenderEntireTree = () => {
     ReactDOM.render(
         <HashRouter>
-            <App dialogsPage={state} profilePage={state} addPost={addPost} updateNewPostText={updateNewPostText}/>
+            <Provider store={store}>
+                <App />
+            </Provider>
         </HashRouter>, document.getElementById('root')
     );
 }
 
-rerenderEntireTree(state);
+rerenderEntireTree();
 
-subscribe(rerenderEntireTree);
-
+store.subscribe(() => {
+    rerenderEntireTree()
+});
 
 
 // If you want to start measuring performance in your app, pass a function

@@ -12,5 +12,7 @@
 
 .app-wrapper-content {
     grid-area: c;
-    background-color: pink;
+    background-color: cadetblue;
+    border-radius: 15px;
+    margin: 10px;
 }
