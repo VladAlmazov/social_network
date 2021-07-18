@@ -8,9 +8,9 @@ import {DialogsPropsType, DialogType, MessageType} from '../../redux/redux-store
 export const Dialogs = (props: DialogsPropsType) => {
     let state = props.dialogsPage
 
-    const dialogsElements = state.dialogsData.users.map((d: DialogType) => <DialogItem name={d.name} id={d.id}/>)
+    const dialogsElements = state.dialogsData.users.map((d: DialogType) => <DialogItem key={d.id} name={d.name} id={d.id}/>)
 
-    const messagesElements = state.messagesData.messages.map((m: MessageType) => <Message message={m.message}/>)
+    const messagesElements = state.messagesData.messages.map((m: MessageType) => <Message key={m.id} message={m.message}/>)
 
     const newMessageBody = state.newMessageBody;
 
