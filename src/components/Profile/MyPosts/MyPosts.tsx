@@ -1,7 +1,13 @@
 import React from 'react';
 import s from './MyPosts.module.css';
-import Post from './Post/Post';
-import {MyPostsPropsType, PostType} from '../../../redux/redux-store';
+import Post, {PostType} from './Post/Post';
+
+export type MyPostsPropsType = {
+    posts: PostType[]
+    newPostText: string
+    updateNewPostText: (text: string) => void
+    addPost: () => void
+}
 
 const MyPosts = (props: MyPostsPropsType) => {
 

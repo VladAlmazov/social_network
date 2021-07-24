@@ -1,8 +1,4 @@
-import {profileReducer} from './profile-reducer';
-import {dialogsReducer} from './dialogs-reducer';
-import {PostType, StoreType} from './redux-store';
-
-
+export const jashfihh = 1
 
 // export let store: StoreType = {
 //     _state: {

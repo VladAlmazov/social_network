@@ -1,12 +1,10 @@
 import React from 'react';
-import s from './Profile.module.css';
-import ProfileInfo from './ProfileInfo/ProfileInfo';
-import {ProfilePropsType} from '../../redux/redux-store';
 import { MyPostContainer } from './MyPosts/MyPostsContainer';
+import { ProfileInfo } from './ProfileInfo/ProfileInfo';
 
 
 
-const Profile = (props: ProfilePropsType) => {
+export const Profile = () => {
 return (
     <div>
         <ProfileInfo/>
@@ -14,5 +12,3 @@ return (
     </div>
 )
 }
-
-export default Profile;

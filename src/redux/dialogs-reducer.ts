@@ -1,15 +1,31 @@
-import {
-    ActionsType,
-    DialogsPageType,
-    SendMessageActionType,
-    UpdateNewMessageActionType
-} from './redux-store';
+import {DialogType, MessageType} from '../components/Dialogs/Dialogs';
 
+export type DialogsAT = UpdateNewMessageActionType | SendMessageActionType
+
+export type DialogsDataType = {
+    users: Array<DialogType> // Одно и то же
+}
+export type MessageDataType = {
+    messages: MessageType[] // Одно и то же
+}
+export type DialogsPageType = {
+    dialogsData: DialogsDataType
+    messagesData: MessageDataType
+    newMessageBody: string
+}
+
+export type UpdateNewMessageActionType = {
+    type: 'UPDATE_NEW_MESSAGE_BODY'
+    body: string
+}
+export type SendMessageActionType = {
+    type: 'SEND_MESSAGE'
+}
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY'
 const SEND_MESSAGE = 'SEND_MESSAGE'
 
-let initialState = {
+let initialState: DialogsPageType = {
     dialogsData: {
         users: [
             {id: 1, name: 'Dimych'},
@@ -31,7 +47,7 @@ let initialState = {
     newMessageBody: ''
 }
 
-export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsType): DialogsPageType => {
+export const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsAT): DialogsPageType => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY:
             return {...state, newMessageBody: action.body};

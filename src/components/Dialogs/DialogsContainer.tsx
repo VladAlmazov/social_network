@@ -1,5 +1,10 @@
-import {sendMessageCreator, updateNewMessageBodyCreator} from '../../redux/dialogs-reducer';
-import {ReduxStoreType, SendMessageActionType, UpdateNewMessageActionType} from '../../redux/redux-store';
+import {
+    SendMessageActionType,
+    sendMessageCreator,
+    UpdateNewMessageActionType,
+    updateNewMessageBodyCreator
+} from '../../redux/dialogs-reducer';
+import {ReduxStoreType} from '../../redux/redux-store';
 import {Dialogs} from './Dialogs';
 import {connect} from 'react-redux';
 import { Dispatch } from 'redux';
