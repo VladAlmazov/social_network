@@ -13,9 +13,9 @@ export type LocationType = {
 }
 export type UserType = {
     id: number
-    photoUrl: string
+    photos: {small: undefined, large: undefined}
     followed: boolean
-    fullName: string
+    name: string
     status: string
     location: LocationType
 }
@@ -29,42 +29,7 @@ export type SetUsersAT = {
 }
 
 let initialState: UsersPageType = {
-    users: [{
-        id: 1, photoUrl: 'http://archilab.online/images/1/123.jpg',
-        followed: false,
-        fullName: 'Vlad',
-        status: 'I am a boss',
-        location: {
-            city: 'Kyiv', country: 'Ukraine'
-        }
-    },
-        {
-            id: 2, photoUrl: 'http://archilab.online/images/1/123.jpg',
-            followed: true,
-            fullName: 'Stas',
-            status: 'I am a boss too',
-            location: {
-                city: 'Moscow', country: 'Russia'
-            }
-        },
-        {
-            id: 3, photoUrl: 'http://archilab.online/images/1/123.jpg',
-            followed: false,
-            fullName: 'Andrei',
-            status: 'I am a boss too',
-            location: {
-                city: 'Berlin', country: 'Germany'
-            }
-        },
-        {
-            id: 4, photoUrl: 'http://archilab.online/images/1/123.jpg',
-            followed: true,
-            fullName: 'Denis',
-            status: 'I am a boss too',
-            location: {
-                city: 'Madrid', country: 'Spain'
-            }
-        }]
+    users: []
 }
 
 
