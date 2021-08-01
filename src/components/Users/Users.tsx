@@ -29,7 +29,7 @@ export const Users = (props: UsersPropsType) => {
                     onClick={() => props.onPageChanged(p)
                     }
                 >
-                    {p + ','}
+                    {p + ','} 
                 </span>
             })}
         </div>
