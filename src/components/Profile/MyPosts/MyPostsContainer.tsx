@@ -1,7 +1,7 @@
 import {
     addPostActionCreator,
-    AddPostActionType,
-    UpdateNewPostActionType,
+    AddPostAT,
+    UpdateNewPostAT,
     updateNewPostTextActionCreator
 } from '../../../redux/profile-reducer';
 import MyPosts from './MyPosts';
@@ -15,7 +15,7 @@ const mapStateToProps = (state: ReduxStoreType) => {
         newPostText: state.profileReducer.newPostText
     }
 }
-const mapDispatchToProps = (dispatch: Dispatch<AddPostActionType | UpdateNewPostActionType>) => {
+const mapDispatchToProps = (dispatch: Dispatch<AddPostAT | UpdateNewPostAT>) => {
     return {
         updateNewPostText: (text: string) => {
             let action = updateNewPostTextActionCreator(text);

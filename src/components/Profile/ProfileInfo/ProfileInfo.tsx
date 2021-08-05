@@ -1,8 +1,15 @@
 import React from 'react';
 import s from './ProfileInfo.module.css';
+import {Preloader} from '../../common/Preloader/Preloader';
 
+export type ProfileInfoPropsType = {
+    profile: any
+}
 
-export const ProfileInfo = () => {
+export const ProfileInfo = (props: ProfileInfoPropsType) => {
+    if (!props.profile) {
+        return <Preloader />
+    }
     return (
         <div className={s.profile}>
             <div className={s.img}>
@@ -11,6 +18,7 @@ export const ProfileInfo = () => {
                     alt="avatar" className={s.img}/>
             </div>
             <div className={s.descriptionBlock}>
+                <img alt={'avatar'} src={props.profile.photos.large}/>
                 ava + description
             </div>
         </div>

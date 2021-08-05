@@ -1,13 +1,11 @@
 import {connect} from 'react-redux';
 import {ReduxStoreType} from '../../redux/redux-store';
-import {Dispatch} from 'redux';
 import {
     follow,
     setCurrentPage,
     setUsers,
     setTotalUsersCount, toggleIsFetching,
     unfollow,
-    UsersAT,
     UserType
 } from '../../redux/users-reducer';
 import React from 'react';
@@ -30,24 +28,24 @@ export type UsersAPIPropsType = {
     toggleIsFetching: (isFetching: boolean) => void
 }
 
-export class UsersContainer extends React.Component<UsersAPIPropsType> {
+class UsersContainer extends React.Component<UsersAPIPropsType> {
 
     componentDidMount() {
-        this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
-            this.props.toggleIsFetching(false)
+        this.props.toggleIsFetching(true);
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {withCredentials: true}).then(response => {
+            this.props.toggleIsFetching(false);
             this.props.setUsers(response.data.items);
             this.props.setTotalUsersCount(response.data.totalCount);
-        })
+        });
     }
 
     onPageChanged = (pageNumber: number) => {
         this.props.setCurrentPage(pageNumber);
-        this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`).then(response => {
-            this.props.toggleIsFetching(false)
-            this.props.setUsers(response.data.items)
-        })
+        this.props.toggleIsFetching(true);
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`, {withCredentials: true}).then(response => {
+            this.props.toggleIsFetching(false);
+            this.props.setUsers(response.data.items);
+        });
     }
 
     render() {
