@@ -5,6 +5,7 @@ export type UsersAT =
     | setCurrentPageAT
     | setTotalUsersCountAT
     | ToggleIfFetchingAT
+    | ToggleFollowingProgressAT
 export type FollowAT = {
     type: 'FOLLOW'
     userId: number
@@ -29,6 +30,11 @@ export type ToggleIfFetchingAT = {
     type: 'TOGGLE-IS-FETCHING'
     isFetching: boolean
 }
+export type ToggleFollowingProgressAT = {
+    type: 'TOGGLE_IS_FOLLOWING_PROGRESS'
+    isFetching: boolean
+    userId: number
+}
 
 export type LocationType = {
     city: string
@@ -49,7 +55,7 @@ export type UsersPageType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
-    followingInProgress: boolean
+    followingInProgress: Array<number>
 }
 
 
@@ -59,7 +65,7 @@ let initialState: UsersPageType = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
-    followingInProgress: false
+    followingInProgress: []
 }
 
 export const usersReducer = (state: UsersPageType = initialState, action: UsersAT): UsersPageType => {
@@ -97,6 +103,14 @@ export const usersReducer = (state: UsersPageType = initialState, action: UsersA
         case 'TOGGLE-IS-FETCHING': {
             return {...state, isFetching: action.isFetching}
         }
+        case 'TOGGLE_IS_FOLLOWING_PROGRESS': {
+            return {
+                ...state,
+                followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(id => id !== action.userId)
+            }
+        }
         default:
             return state;
     }
@@ -116,4 +130,11 @@ export const setTotalUsersCount = (totalUsersCount: number): setTotalUsersCountA
         count: totalUsersCount
     }
 )
-export const toggleIsFetching = (isFetching: boolean): ToggleIfFetchingAT => ({type: 'TOGGLE-IS-FETCHING', isFetching})
+export const toggleIsFetching = (isFetching: boolean): ToggleIfFetchingAT => (
+    {type: 'TOGGLE-IS-FETCHING', isFetching}
+)
+export const toggleFollowingProgress = (isFetching: boolean, userId: number): ToggleFollowingProgressAT => (
+    {type: 'TOGGLE_IS_FOLLOWING_PROGRESS', isFetching, userId}
+)
+
+
