@@ -8,6 +8,7 @@ import {RouteComponentProps, withRouter } from 'react-router-dom';
 export type ProfileContainerPropsType = {
     profile: any
     match: { params: {userId: number} }
+    getUserProfile: (userId: number) => void
 }
 
 type PathParamsType = {
@@ -19,7 +20,7 @@ type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerPropsType
 class ProfileContainer extends React.Component<PropsType>{
     componentDidMount() {
         let userId = this.props.match.params.userId;
-        getUserProfile(userId)
+        this.props.getUserProfile(userId)
     }
 
     render() {
@@ -37,4 +38,4 @@ let mapStateToProps = (state: ReduxStoreType) => {
 
 const withUrlDataContainerComponent = withRouter(ProfileContainer)
 
-export default  connect(mapStateToProps)(withUrlDataContainerComponent)
+export default  connect(mapStateToProps, {getUserProfile})(withUrlDataContainerComponent)
