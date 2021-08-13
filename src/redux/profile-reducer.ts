@@ -1,4 +1,6 @@
 import {PostType} from '../components/Profile/MyPosts/Post/Post';
+import {Dispatch} from 'redux';
+import {usersAPI} from '../api/api';
 
 export type ProfileAT = AddPostAT | UpdateNewPostAT | SetUserProfileAT
 
@@ -59,3 +61,11 @@ export const setUserProfile = (profile: null): SetUserProfileAT => ({type: 'SET-
 export const updateNewPostTextActionCreator = (newText: string): UpdateNewPostAT => (
     {type: 'UPDATE-NEW-POST-TEXT', newText: newText}
 )
+
+export const getUserProfile = (userId: number) => {
+    return (dispatch: Dispatch) => {
+        usersAPI.getUserProfile(userId).then(data => {
+            dispatch(setUserProfile(data.items));
+        })
+    }
+}
