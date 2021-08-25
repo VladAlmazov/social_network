@@ -1,5 +1,5 @@
 import {Dispatch} from 'redux';
-import {usersAPI} from '../api/api';
+import {authAPI} from '../api/api';
 
 export type UsersAT = SetUserDataAT
 
@@ -56,9 +56,9 @@ export const setAuthUserData = (data: SetUserDataType): SetUserDataAT => ({
     data: data,
 })
 
-export const getAuthMe = () => {
+export const getAuthUserData = () => {
     return (dispatch: Dispatch) => {
-        usersAPI.getAuthMe().then(data => {
+        authAPI.getMe().then(data => {
             if (data.resultCode === 0) {
                 dispatch(setAuthUserData(data.data.login))
             }
