@@ -22,7 +22,9 @@ export const Users = (props: UsersPropsType) => {
 
     let pages = [];
     for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i)
+        if (i <= 50) {
+            pages.push(i)
+        }
     }
 
     return <div>
@@ -31,8 +33,7 @@ export const Users = (props: UsersPropsType) => {
                 return <span
                     className={props.currentPage === p && styles.selectedPage || ''}
                     onClick={() => props.onPageChanged(p)
-                    }
-                >
+                    }>
                     {p + ','} 
                 </span>
             })}
@@ -51,14 +52,16 @@ export const Users = (props: UsersPropsType) => {
                             disabled={props.followingInProgress.some(id => id === u.id)}
                             onClick={() => {
                                 props.unfollowUser(u.id)
-                            }}>Unfollow</button>
+                            }}>
+                            Unfollow
+                        </button>
                         : <button
                             disabled={props.followingInProgress.some(id => id === u.id)}
                             onClick={() => {
                                 props.followUser(u.id)
-                            }}
-                        >
-                            Follow</button>}
+                            }}>
+                            Follow
+                        </button>}
                 </div>
             </span>
             <span>
