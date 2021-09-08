@@ -1,10 +1,10 @@
 import {connect} from 'react-redux';
 import {ReduxStoreType} from '../../redux/redux-store';
 import {
-    follow,
-    setCurrentPage,
-    unfollow,
-    UserType, toggleFollowingProgress, getUsers, unfollowUser, followUser
+    followAC,
+    setCurrentPageAC,
+    unfollowAC,
+    UserType, toggleFollowingProgressAC, getUsersTC, unfollowUserTC, followUserTC
 } from '../../redux/users-reducer';
 import React from 'react';
 import {Users} from './Users';
@@ -13,29 +13,29 @@ import {compose} from 'redux';
 import {withAuthRedirect} from '../../hoc/WithAuthRedirect';
 
 export type UsersAPIPropsType = {
-    follow: (userId: number) => void
-    unfollow: (userId: number) => void
+    followAC: (userId: number) => void
+    unfollowAC: (userId: number) => void
     users: Array<UserType>
     pageSize: number
     totalUsersCount: number
     currentPage: number
-    setCurrentPage: (pageNumber: number) => void
+    setCurrentPageAC: (pageNumber: number) => void
     isFetching: boolean
     followingInProgress: Array<number>
-    getUsers: (currentPage: number, pageSize: number) => void
-    unfollowUser: (userId: number) => void
-    followUser: (userId: number) => void
+    getUsersTC: (currentPage: number, pageSize: number) => void
+    unfollowUserTC: (userId: number) => void
+    followUserTC: (userId: number) => void
 }
 
 class UsersContainer extends React.Component<UsersAPIPropsType> {
 
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+        this.props.getUsersTC(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.getUsers(pageNumber, this.props.pageSize)
-        this.props.setCurrentPage(pageNumber);
+        this.props.getUsersTC(pageNumber, this.props.pageSize)
+        this.props.setCurrentPageAC(pageNumber);
     }
 
     render() {
@@ -47,11 +47,11 @@ class UsersContainer extends React.Component<UsersAPIPropsType> {
                 currentPage={this.props.currentPage}
                 onPageChanged={this.onPageChanged}
                 users={this.props.users}
-                follow={this.props.follow}
-                unfollow={this.props.unfollow}
+                follow={this.props.followAC}
+                unfollow={this.props.unfollowAC}
                 followingInProgress={this.props.followingInProgress}
-                unfollowUser={this.props.unfollowUser}
-                followUser={this.props.followUser}
+                unfollowUser={this.props.unfollowUserTC}
+                followUser={this.props.followUserTC}
             />
         </>
     }
@@ -94,12 +94,12 @@ let mapStateToProps = (state: ReduxStoreType) => {
 export default compose<React.ComponentType>(
     withAuthRedirect,
     connect(mapStateToProps, {
-        follow,
-        unfollow,
-        setCurrentPage,
-        toggleFollowingProgress,
-        getUsers,
-        unfollowUser,
-        followUser,
+        followAC,
+        unfollowAC,
+        setCurrentPageAC,
+        toggleFollowingProgressAC,
+        getUsersTC,
+        unfollowUserTC,
+        followUserTC,
     }),
 ) (UsersContainer)
