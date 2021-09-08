@@ -1,4 +1,4 @@
-import React, { ComponentType } from 'react';
+import React  from 'react';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 
 type FormDataType = {

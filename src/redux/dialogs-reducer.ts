@@ -1,6 +1,6 @@
 import {DialogType, MessageType} from '../components/Dialogs/Dialogs';
 
-export type DialogsAT = UpdateNewMessageActionType | SendMessageActionType
+export type DialogsActions = sendMessageAT
 
 export type DialogsDataType = {
     users: Array<DialogType> // Одно и то же
@@ -11,19 +11,9 @@ export type MessageDataType = {
 export type DialogsPageType = {
     dialogsData: DialogsDataType
     messagesData: MessageDataType
-    newMessageBody: string
 }
 
-export type UpdateNewMessageActionType = {
-    type: 'UPDATE_NEW_MESSAGE_BODY'
-    body: string
-}
-export type SendMessageActionType = {
-    type: 'SEND_MESSAGE'
-}
-
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY'
-const SEND_MESSAGE = 'SEND_MESSAGE'
+export type sendMessageAT = ReturnType<typeof sendMessageCreator>
 
 let initialState: DialogsPageType = {
     dialogsData: {
@@ -44,18 +34,14 @@ let initialState: DialogsPageType = {
             {id: 5, message: 'Yo'}
         ]
     },
-    newMessageBody: ''
 }
 
-export const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsAT): DialogsPageType => {
+export const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsActions): DialogsPageType => {
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_BODY:
-            return {...state, newMessageBody: action.body};
-        case SEND_MESSAGE:
-            let body = state.newMessageBody;
+        case 'SEND-MESSAGE':
+            let body = action.newMessageBody;
             return {
                 ...state,
-                newMessageBody: '',
                 messagesData: {
                     ...state.messagesData,
                     messages: [
@@ -70,8 +56,6 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Di
     }
 }
 
-export const sendMessageCreator = (): SendMessageActionType => ({type: SEND_MESSAGE})
-
-export const updateNewMessageBodyCreator = (body: string): UpdateNewMessageActionType => (
-    {type: UPDATE_NEW_MESSAGE_BODY, body: body}
+export const sendMessageCreator = (newMessageBody: string) => (
+    {type: 'SEND-MESSAGE', newMessageBody} as const
 )

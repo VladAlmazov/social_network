@@ -1,8 +1,6 @@
 import {
-    addPostActionCreator,
+    addPostAC,
     AddPostAT,
-    UpdateNewPostAT,
-    updateNewPostTextActionCreator
 } from '../../../redux/profile-reducer';
 import MyPosts from './MyPosts';
 import {ReduxStoreType} from '../../../redux/redux-store';
@@ -12,17 +10,12 @@ import { Dispatch } from 'redux';
 const mapStateToProps = (state: ReduxStoreType) => {
     return {
         posts: state.profileReducer.posts,
-        newPostText: state.profileReducer.newPostText
     }
 }
-const mapDispatchToProps = (dispatch: Dispatch<AddPostAT | UpdateNewPostAT>) => {
+const mapDispatchToProps = (dispatch: Dispatch<AddPostAT>) => {
     return {
-        updateNewPostText: (text: string) => {
-            let action = updateNewPostTextActionCreator(text);
-            dispatch(action)
-        },
-        addPost: () => {
-            dispatch(addPostActionCreator());
+        addPost: (newPostText: string) => {
+            dispatch(addPostAC(newPostText));
         }
     }
 }

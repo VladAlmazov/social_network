@@ -1,12 +1,11 @@
 import React from 'react';
 import s from './MyPosts.module.css';
 import Post, {PostType} from './Post/Post';
+import {Field, reduxForm} from 'redux-form';
 
 export type MyPostsPropsType = {
     posts: PostType[]
-    newPostText: string
-    updateNewPostText: (text: string) => void
-    addPost: () => void
+    addPost: (values: any) => void
 }
 
 const MyPosts = (props: MyPostsPropsType) => {
@@ -14,35 +13,33 @@ const MyPosts = (props: MyPostsPropsType) => {
     const postsElement =
         props.posts.map((p: PostType) => <Post message={p.message} likesCount={p.likesCount}/>)
 
-    const newPostElement = React.createRef<HTMLTextAreaElement>()
-
-    const onAddPost = () => {
-        if (newPostElement.current) {
-            props.addPost();
-        }
-    }
-
-    const onPostChange = () => {
-        if (newPostElement.current) {
-            props.updateNewPostText(newPostElement.current.value)
-        }
+    const onAddPost = (values: any) => {
+        props.addPost(values.newPostText);
     }
 
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
-            <div>
-                <div>
-                    <textarea ref={newPostElement} value={props.newPostText} onChange={onPostChange}/>
-                </div>
-                <div>
-                    <button onClick={onAddPost}>Add post</button>
-                </div>
-            </div>
+            <AddNewPostReduxForm onSubmit={onAddPost}/>
             <div className={s.posts}>
-                { postsElement }
+                {postsElement}
             </div>
         </div>)
 }
+
+const addNewPostForm = (props: any) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <Field name="newPostText" component='textarea'/>
+            </div>
+            <div>
+                <button>Add post</button>
+            </div>
+        </form>
+    )
+}
+
+const AddNewPostReduxForm = reduxForm({form: 'addNewPost'})(addNewPostForm)
 
 export default MyPosts;

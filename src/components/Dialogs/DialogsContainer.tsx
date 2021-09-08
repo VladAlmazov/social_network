@@ -1,8 +1,5 @@
-import {
-    SendMessageActionType,
+import {sendMessageAT,
     sendMessageCreator,
-    UpdateNewMessageActionType,
-    updateNewMessageBodyCreator
 } from '../../redux/dialogs-reducer';
 import {ReduxStoreType} from '../../redux/redux-store';
 import {Dialogs} from './Dialogs';
@@ -16,13 +13,10 @@ let mapStateToProps = (state: ReduxStoreType) => {
         dialogsPage: state.dialogsReducer,
     }
 }
-let mapDispatchToProps = (dispatch: Dispatch<UpdateNewMessageActionType | SendMessageActionType>) => {
+let mapDispatchToProps = (dispatch: Dispatch<sendMessageAT>) => {
     return {
-        updateNewMessageBody: (body: string) => {
-            dispatch(updateNewMessageBodyCreator(body))
-        },
-        sendMessage: () => {
-            dispatch(sendMessageCreator());
+        sendMessage: (newMessageBody: string) => {
+            dispatch(sendMessageCreator(newMessageBody));
         }
     }
 }
