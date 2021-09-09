@@ -14,6 +14,8 @@ export type ProfileContainerPropsType = {
     getStatus: (userId: number) => void
     status: string
     updateStatus: (status: string) => void
+    authorizedUserId: number
+    isAuth: boolean
 }
 
 type PathParamsType = {
@@ -26,7 +28,7 @@ class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
         let userId = +this.props.match.params.userId;
         if (!userId) {
-            userId = 18289
+            userId = this.props.authorizedUserId
         }
         this.props.getUserProfile(userId)
         this.props.getStatus(userId)
@@ -34,9 +36,11 @@ class ProfileContainer extends React.Component<PropsType> {
 
     render() {
         return (
-            <Profile profile={this.props.profile}
+            <Profile {...this.props}
+                     profile={this.props.profile}
                      status={this.props.status}
-                     updateStatus={this.props.updateStatus}/>
+                     updateStatus={this.props.updateStatus}
+            />
         )
     }
 }
@@ -44,6 +48,8 @@ class ProfileContainer extends React.Component<PropsType> {
 let mapStateToProps = (state: ReduxStoreType) => ({
     profile: state.profileReducer.profile,
     status: state.profileReducer.status,
+    authorizedUserId: state.auth.id,
+    isAuth: state.auth.isAuth
 })
 
 export default compose<React.ComponentType>(

@@ -1,4 +1,5 @@
 import {Dispatch} from 'redux';
+import { stopSubmit } from 'redux-form';
 import {authAPI} from '../api/api';
 
 export type UsersAT = SetUserAT
@@ -20,7 +21,7 @@ export type AuthPageType = {
 
 
 let initialState: AuthPageType = {
-    id: 1,
+    id: 18289,
     email: '',
     login: '',
     isAuth: false,
@@ -51,16 +52,21 @@ export const getAuthUserDataTC = () => (dispatch: Dispatch) => {
     });
 }
 export const loginTC = (email: string, password: string, rememberMe: boolean) => (dispatch: Dispatch) => {
-    authAPI.login(email, password, rememberMe).then(data => {
-        if (data.resultCode === 0) {
+
+    authAPI.login(email, password, rememberMe).then(response => {
+        debugger
+        if (response.resultCode === 0) {
             // @ts-ignore
             dispatch(getAuthUserDataTC())
+        } else {
+           let message = response.messages.length > 0 ? response.messages[0] : 'Some error'
+            dispatch(stopSubmit('login', {_error: message}))
         }
     });
 }
 export const logoutTC = () => (dispatch: Dispatch) => {
-    authAPI.logout().then(data => {
-        if (data.resultCode === 0) {
+    authAPI.logout().then(response => {
+        if (response.resultCode === 0) {
             dispatch(setAuthUserDataAC(0, '', '', false))
         }
     });
