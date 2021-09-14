@@ -114,8 +114,7 @@ export const toggleFollowingProgressAC = (isFetching: boolean, userId: number) =
     {type: 'TOGGLE_IS_FOLLOWING_PROGRESS', isFetching, userId} as const
 )
 
-export const getUsersTC = (currentPage: number, pageSize: number) => {
-    return (dispatch: Dispatch) => {
+export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
         dispatch(toggleIsFetchingAC(true));
 
         usersAPI.getUsers(currentPage, pageSize).then(data => {
@@ -124,7 +123,7 @@ export const getUsersTC = (currentPage: number, pageSize: number) => {
             dispatch(setTotalUsersCountAC(data.totalCount));
         });
     }
-}
+
 export const followUserTC = (userId: number) => {
     return (dispatch: Dispatch) => {
         dispatch(toggleFollowingProgressAC(true, userId))
