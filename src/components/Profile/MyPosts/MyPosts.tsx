@@ -12,7 +12,7 @@ export type MyPostsPropsType = {
 
 let maxLength10 = maxLengthCreator(10)
 
-const MyPosts = (props: MyPostsPropsType) => {
+const MyPosts = React.memo((props: MyPostsPropsType) => {
 
     const postsElement =
         props.posts.map((p: PostType) => <Post message={p.message} likesCount={p.likesCount}/>)
@@ -29,7 +29,7 @@ const MyPosts = (props: MyPostsPropsType) => {
                 {postsElement}
             </div>
         </div>)
-}
+})
 
 const addNewPostForm = (props: any) => {
     return (
