@@ -2,7 +2,7 @@ import {PostType} from '../components/Profile/MyPosts/Post/Post';
 import {Dispatch} from 'redux';
 import {profileAPI, usersAPI} from '../api/api';
 
-export type ProfileAT = AddPostAT | UpdateNewPostAT | SetUserProfileAT | SetStatusAT
+export type ProfileAT = AddPostAT | UpdateNewPostAT | SetUserProfileAT | SetStatusAT | DeletePostAT
 
 export type PostDataType = {
     posts: PostType[]
@@ -32,6 +32,7 @@ export type ResponseProfileType = {
     }
 }
 export type AddPostAT = ReturnType<typeof addPostAC>
+export type DeletePostAT = ReturnType<typeof deletePostAC>
 export type UpdateNewPostAT = ReturnType<typeof updateNewPostTextActionCreator>
 export type SetUserProfileAT = ReturnType<typeof setUserProfile>
 export type SetStatusAT = ReturnType<typeof setStatus>
@@ -64,11 +65,15 @@ export const profileReducer = (state: PostDataType = initialState, action: Profi
         case 'SET-STATUS': {
             return {...state, status: action.status}
         }
+        case 'DELETE-POST': {
+            return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
+        }
         default:
             return state;
     }
 }
 export const addPostAC = (newPostText: string) => ({type: 'ADD-POST', newPostText} as const)
+export const deletePostAC = (postId: number) => ({type: 'DELETE-POST', postId} as const)
 export const setUserProfile = (profile: ResponseProfileType) => ({type: 'SET-USER-PROFILE', profile} as const)
 export const updateNewPostTextActionCreator = (newText: string) => (
     {type: 'UPDATE-NEW-POST-TEXT', newText: newText} as const
