@@ -11,16 +11,16 @@ export type ProfileInfoPropsType = {
     updateStatus: (status: string) => void
 }
 
-export const ProfileInfo = (props: ProfileInfoPropsType) => {
-    if (!props.profile) {
+export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, updateStatus}) => {
+    if (!profile) {
         return <Preloader />
     }
     return (
         <div className={s.profile}>
             <div className={s.descriptionBlock}>
                 <img alt={'avatar'}
-                     src={props.profile.photos.large ? props.profile.photos.large : userPhoto}/>
-                <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
+                     src={profile.photos.large ? profile.photos.large : userPhoto}/>
+                <ProfileStatus status={status} updateStatus={updateStatus}/>
             </div>
         </div>
     )

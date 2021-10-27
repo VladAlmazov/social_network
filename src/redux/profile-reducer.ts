@@ -50,7 +50,7 @@ let initialState: PostDataType = {
 
 export const profileReducer = (state: PostDataType = initialState, action: ProfileAT): PostDataType => {
     switch (action.type) {
-        case 'ADD-POST': {
+        case 'social-network/profile/ADD-POST': {
             return {
                 ...state, posts: [...state.posts, {
                     id: state.posts.length + 1,
@@ -59,43 +59,46 @@ export const profileReducer = (state: PostDataType = initialState, action: Profi
                 }]
             };
         }
-        case 'SET-USER-PROFILE': {
+        case 'social-network/profile/SET-USER-PROFILE': {
             return {...state, profile: action.profile}
         }
-        case 'SET-STATUS': {
+        case 'social-network/profile/SET-STATUS': {
             return {...state, status: action.status}
         }
-        case 'DELETE-POST': {
+        case 'social-network/profile/DELETE-POST': {
             return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
         }
         default:
             return state;
     }
 }
-export const addPostAC = (newPostText: string) => ({type: 'ADD-POST', newPostText} as const)
-export const deletePostAC = (postId: number) => ({type: 'DELETE-POST', postId} as const)
-export const setUserProfile = (profile: ResponseProfileType) => ({type: 'SET-USER-PROFILE', profile} as const)
+export const addPostAC = (newPostText: string) => (
+    {type: 'social-network/profile/ADD-POST', newPostText} as const
+)
+export const deletePostAC = (postId: number) => (
+    {type: 'social-network/profile/DELETE-POST', postId} as const
+)
+export const setUserProfile = (profile: ResponseProfileType) => (
+    {type: 'social-network/profile/SET-USER-PROFILE', profile} as const
+)
 export const updateNewPostTextActionCreator = (newText: string) => (
-    {type: 'UPDATE-NEW-POST-TEXT', newText: newText} as const
+    {type: 'social-network/profile/UPDATE-NEW-POST-TEXT', newText: newText} as const
 )
 export const setStatus = (status: string) => (
-    {type: 'SET-STATUS', status} as const
+    {type: 'social-network/profile/SET-STATUS', status} as const
 )
 
-export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
-    usersAPI.getUserProfile(userId).then(res => {
-        dispatch(setUserProfile(res.data));
-    })
+export const getUserProfile = (userId: number) => async (dispatch: Dispatch) => {
+    let response = await usersAPI.getUserProfile(userId);
+    dispatch(setUserProfile(response.data));
 }
-export const getStatus = (userId: number) => (dispatch: Dispatch) => {
-    profileAPI.getStatus(userId).then(res => {
-        dispatch(setStatus(res.data));
-    })
+export const getStatus = (userId: number) => async (dispatch: Dispatch) => {
+    let response = await profileAPI.getStatus(userId);
+    dispatch(setStatus(response.data));
 }
-export const updateStatus = (status: string) => (dispatch: Dispatch) => {
-    profileAPI.updateStatus(status).then(res => {
-        if (res.data.resultCode === 0) {
-            dispatch(setStatus(status));
-        }
-    })
+export const updateStatus = (status: string) => async (dispatch: Dispatch) => {
+    let response = await profileAPI.updateStatus(status);
+    if (response.data.resultCode === 0) {
+        dispatch(setStatus(status));
+    }
 }

@@ -15,7 +15,7 @@ let initialState: AuthPageType = {
 
 export const appReducer = (state: AuthPageType = initialState, action: UsersAT): AuthPageType => {
     switch (action.type) {
-        case 'INITIALIZED-SUCCESS': {
+        case 'social-network/app/INITIALIZED-SUCCESS': {
             return {
                 ...state,
                 initialized: true,
@@ -26,7 +26,7 @@ export const appReducer = (state: AuthPageType = initialState, action: UsersAT):
     }
 }
 export const initializedSuccessAC = () => (
-    {type: 'INITIALIZED-SUCCESS'} as const
+    {type: 'social-network/app/INITIALIZED-SUCCESS'} as const
 )
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {

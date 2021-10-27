@@ -1,6 +1,6 @@
 import React from 'react';
-import {Field, InjectedFormProps, reduxForm} from 'redux-form';
-import {Input} from '../common/FormsControls/FormsControls';
+import {InjectedFormProps, reduxForm} from 'redux-form';
+import {createField, Input} from '../common/FormsControls/FormsControls';
 import {required} from '../common/validators/validators';
 import {connect} from 'react-redux';
 import {loginTC} from '../../redux/auth-reducer';
@@ -19,12 +19,12 @@ type LoginPropsType = {
     isAuth: boolean
 }
 
-const Login = (props: LoginPropsType) => {
+const Login: React.FC<LoginPropsType> = ({loginTC, isAuth}) => {
     const onSubmit = (formData: FormDataType) => {
-        props.loginTC(formData.email, formData.password, formData.rememberMe)
+        loginTC(formData.email, formData.password, formData.rememberMe)
     }
 
-    if (props.isAuth) {
+    if (isAuth) {
         return <Redirect to={'/profile'}/>
     }
 
@@ -35,26 +35,14 @@ const Login = (props: LoginPropsType) => {
         </div>
     )
 }
-export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field name={'email'}
-                       placeholder={'Email'}
-                       validate={[required]}
-                       component={Input}/>
-            </div>
-            <div>
-                <Field name={'password'}
-                       placeholder={'Password'}
-                       type={'password'}
-                       validate={[required]}
-                       component={Input}/>
-            </div>
-            <div>
-                <Field name={'rememberMe'} component={Input} type={'checkbox'}/> remember me
-            </div>
-            {props.error &&<div className={style.formSummaryError}>{props.error}</div>}
+        <form onSubmit={handleSubmit}>
+            {createField('Email', 'email', [required], Input)}
+            {createField('Password', 'password', [required], Input, {type: 'password'})}
+            {createField(null, 'rememberMe', [required], Input, {type: 'checkbox'}, 'remember me')}
+
+            {error && <div className={style.formSummaryError}>{error}</div>}
             <div>
                 <button>Login</button>
             </div>
