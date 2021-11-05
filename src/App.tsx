@@ -1,16 +1,16 @@
 import React from 'react';
 import './App.css';
 import Nav from './components/Nav/Nav';
-import {Route, withRouter} from 'react-router-dom';
+import {HashRouter, Route, withRouter} from 'react-router-dom';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import {compose} from 'redux';
-import {connect} from 'react-redux';
+import {connect, Provider} from 'react-redux';
 import {initializeAppTC} from './redux/app-reducer';
-import {ReduxStoreType} from './redux/redux-store';
+import {ReduxStoreType, store} from './redux/redux-store';
 import {Preloader} from './components/common/Preloader/Preloader';
 
 type AppPropsType = {
@@ -52,6 +52,14 @@ const mapStateToProps = (state: ReduxStoreType) => {
     }
 }
 
-export default compose<React.ComponentType>(
+let AppContainer = compose<React.ComponentType>(
     withRouter, connect(mapStateToProps, {initializeAppTC})
 )(App);
+
+export let MainApp = () => {
+    return <HashRouter>
+        <Provider store={store}>
+            <AppContainer/>
+        </Provider>
+    </HashRouter>
+}

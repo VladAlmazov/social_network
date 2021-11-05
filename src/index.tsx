@@ -1,20 +1,11 @@
 import React from 'react';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import {store} from './redux/redux-store';
 import ReactDOM from 'react-dom';
 import './index.css';
-import {HashRouter} from 'react-router-dom';
-import {Provider} from 'react-redux';
-import App from './App';
+import {MainApp} from './App';
 
-ReactDOM.render(
-    <HashRouter>
-        <Provider store={store}>
-            <App/>
-        </Provider>
-    </HashRouter>, document.getElementById('root')
-);
+ReactDOM.render(<MainApp/>, document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
